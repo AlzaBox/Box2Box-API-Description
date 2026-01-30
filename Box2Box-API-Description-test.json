@@ -467,158 +467,8 @@
         "tags": [
           "Order"
         ],
-        "summary": "Gets the PDF label for a specific order and default sub-partner. (Auth)",
-        "description": "Sample request:\r\n\r\n    GET api/v1/order/Order-123/label\r\n    \r\nBase64 string label deserialization example:\r\n\r\n    byte[] bytes = Convert.FromBase64String(base64String);\r\n    string filePath = Path.Combine(Environment.CurrentDirectory, \"label.pdf\");\r\n    File.WriteAllBytes(filePath, bytes);",
-        "parameters": [
-          {
-            "name": "partnerOrderId",
-            "in": "path",
-            "description": "The partner's order identifier.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LabelResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LabelResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LabelResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2": []
-          },
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/order/{partnerOrderId}/label/{subPartnerId}": {
-      "get": {
-        "tags": [
-          "Order"
-        ],
-        "summary": "Gets the PDF label for a specific order and sub-partner. (Auth)",
-        "description": "Sample request:\r\n\r\n    GET api/v1/order/Order-123/label/SubPartner-123\r\n    \r\nBase64 string label deserialization example:\r\n\r\n    byte[] bytes = Convert.FromBase64String(base64String);\r\n    string filePath = Path.Combine(Environment.CurrentDirectory, \"label.pdf\");\r\n    File.WriteAllBytes(filePath, bytes);",
+        "summary": "Gets the PDF label for a specific order and sub-partner (default if not filled in). (Auth)",
+        "description": "Sample requests:\r\n\r\n    GET api/v1/order/Order-123/label\r\n    GET api/v1/order/Order-123/label?subPartnerId=SubPartner-123\r\n    \r\nBase64 string label deserialization example:\r\n\r\n    byte[] bytes = Convert.FromBase64String(base64String);\r\n    string filePath = Path.Combine(Environment.CurrentDirectory, \"label.pdf\");\r\n    File.WriteAllBytes(filePath, bytes);",
         "parameters": [
           {
             "name": "partnerOrderId",
@@ -631,9 +481,8 @@
           },
           {
             "name": "subPartnerId",
-            "in": "path",
-            "description": "The sub-partner identifier.",
-            "required": true,
+            "in": "query",
+            "description": "(Optional) The sub-partner identifier. \r\nIf not provided the default sub-partner is used.",
             "schema": {
               "type": "string"
             }
@@ -770,8 +619,8 @@
           }
         ]
       }
-    }
-  },
+      }
+    },
   "components": {
     "schemas": {
       "Address": {
