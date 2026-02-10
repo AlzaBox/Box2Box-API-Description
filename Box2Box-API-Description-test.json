@@ -156,10 +156,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -295,10 +295,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -309,7 +309,7 @@
           "Order"
         ],
         "summary": "Creates a order according to partner's input. (Auth)",
-        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Novák\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777666555\",\r\n            \"email\": \"jan.novak@example.cz\"\r\n        }\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\",\r\n            \"refundBankNumber\": \"123456789/0100\"\r\n        }    \r\n    }",
+        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Novák\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777666555\",\r\n            \"email\": \"jan.novak@example.cz\"\r\n        }\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\",\r\n            \"refundBankNumber\": \"123456789/0100\"\r\n        }\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            }\r\n            \"weight\": 2.5\r\n        }\r\n    }",
         "requestBody": {
           "description": "Partner's input.",
           "content": {
@@ -454,10 +454,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -612,15 +612,15 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
-      }
-    },
+    }
+  },
   "components": {
     "schemas": {
       "Address": {
@@ -715,6 +715,7 @@
       "CreateOrderBodyInput": {
         "required": [
           "orderValue",
+          "package",
           "partnerOrderId",
           "recipient",
           "recipientBoxId"
@@ -749,6 +750,9 @@
           },
           "payment": {
             "$ref": "#/components/schemas/PaymentInfo"
+          },
+          "package": {
+            "$ref": "#/components/schemas/PackageInfo"
           }
         },
         "additionalProperties": false,
@@ -819,6 +823,7 @@
       "OrderResponse": {
         "required": [
           "orderValue",
+          "package",
           "partnerOrderId",
           "recipient",
           "recipientBoxId"
@@ -854,6 +859,9 @@
           "payment": {
             "$ref": "#/components/schemas/PaymentInfo"
           },
+          "package": {
+            "$ref": "#/components/schemas/PackageInfo"
+          },
           "senderPin": {
             "type": "string",
             "description": "Pin for sender to let the package in.",
@@ -869,6 +877,56 @@
         },
         "additionalProperties": false,
         "description": "General response for Order."
+      },
+      "PackageDimensionsInfo": {
+        "required": [
+          "depth",
+          "height",
+          "width"
+        ],
+        "type": "object",
+        "properties": {
+          "depth": {
+            "type": "number",
+            "description": "Depth of the package in cm.\r\nAllowed precision is 9 and scale 1.\r\nAllowed values are from 0.1 to 99_999_999.9 cm\r\nwith up to one digit allowed to the right of the decimal point.",
+            "format": "double",
+            "example": 15.6
+          },
+          "height": {
+            "type": "number",
+            "description": "Height of the package in cm.\r\nAllowed precision is 9 and scale 1.\r\nAllowed values are from 0.1 to 99_999_999.9 cm\r\nwith up to one digit allowed to the right of the decimal point.",
+            "format": "double",
+            "example": 12.3
+          },
+          "width": {
+            "type": "number",
+            "description": "Width of the package in cm.\r\nAllowed precision is 9 and scale 1.\r\nAllowed values are from 0.1 to 99_999_999.9 cm\r\nwith up to one digit allowed to the right of the decimal point.",
+            "format": "double",
+            "example": 7.8
+          }
+        },
+        "additionalProperties": false,
+        "description": "Package dimensions."
+      },
+      "PackageInfo": {
+        "required": [
+          "dimensions",
+          "weight"
+        ],
+        "type": "object",
+        "properties": {
+          "dimensions": {
+            "$ref": "#/components/schemas/PackageDimensionsInfo"
+          },
+          "weight": {
+            "type": "number",
+            "description": "Weight of the package in kg.\r\nAllowed precision is 9 and scale 3.\r\nAllowed values are from 0.001 to 999_999.999 kg\r\nwith up to three digits allowed to the right of the decimal point.",
+            "format": "double",
+            "example": 2.5
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about package."
       },
       "PaymentInfo": {
         "type": "object",
@@ -927,7 +985,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": {}
+        "additionalProperties": { }
       },
       "RecipientInfo": {
         "required": [
