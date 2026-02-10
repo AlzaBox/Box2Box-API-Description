@@ -788,7 +788,7 @@
           }
         },
         "additionalProperties": false
-      },     
+      },
       "LabelResponse": {
         "type": "object",
         "properties": {
@@ -1025,15 +1025,15 @@
       "OAuth2": {
         "type": "oauth2",
         "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\n                        then generated access token gets all scopes the specified client_id is authorized for.\n                        This behavior is by design by Duende.",
-        "flows": {         
+        "flows": {
           "clientCredentials": {
             "tokenUrl": "https://identitymanagement.phx-test.alza.cz/connect/token",
             "scopes": {
-              "konzole_access": "Konzole Access"            
+              "konzole_access": "Konzole Access"
             }
           }
         }
-      }     
+      }
     }
   },
   "tags": [
