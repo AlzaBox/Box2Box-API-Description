@@ -303,76 +303,6 @@
         ]
       }
     },
-    "/api/graphql": {
-      "post": {
-        "tags": [
-          "GraphQL"
-        ],
-        "summary": " (Auth)",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GraphQLQuery"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GraphQLQuery"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GraphQLQuery"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [ ]
-          },
-          {
-            "Bearer": [ ]
-          }
-        ]
-      }
-    },
-    "/api/healthz": {
-      "get": {
-        "tags": [
-          "Healthz"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/metrics": {
-      "get": {
-        "tags": [
-          "Metrics"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/v1/order": {
       "post": {
         "tags": [
@@ -683,99 +613,6 @@
         "security": [
           {
             "OAuth2": [ ]
-          },
-          {
-            "Bearer": [ ]
-          }
-        ]
-      }
-    },
-    "/api/readiness": {
-      "get": {
-        "tags": [
-          "Readiness"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/serviceinfo/about": {
-      "get": {
-        "tags": [
-          "ServiceInfo"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/serviceinfo/versions": {
-      "get": {
-        "tags": [
-          "ServiceInfo"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/serviceinfo/headers": {
-      "get": {
-        "tags": [
-          "ServiceInfo"
-        ],
-        "summary": " (Auth policies: role::Developer,DevOps)",
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [ ]
-          },
-          {
-            "Bearer": [ ]
-          }
-        ]
-      }
-    },
-    "/api/serviceinfo/userinfo": {
-      "get": {
-        "tags": [
-          "ServiceInfo"
-        ],
-        "summary": " (Auth policies: role::Developer,DevOps)",
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [ ]
-          },
-          {
-            "Bearer": [ ]
           }
         ]
       }
@@ -944,32 +781,6 @@
             "type": "number",
             "description": "Geo location where box is placed.",
             "format": "double",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GraphQLQuery": {
-        "type": "object",
-        "properties": {
-          "operationName": {
-            "type": "string",
-            "nullable": true
-          },
-          "namedQuery": {
-            "type": "string",
-            "nullable": true
-          },
-          "query": {
-            "type": "string",
-            "nullable": true
-          },
-          "variables": {
-            "nullable": true
-          },
-          "parameters": {
-            "type": "object",
-            "additionalProperties": { },
             "nullable": true
           }
         },
@@ -1212,29 +1023,13 @@
         "type": "oauth2",
         "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\n                        then generated access token gets all scopes the specified client_id is authorized for.\n                        This behavior is by design by Duende.",
         "flows": {
-          "password": {
-            "tokenUrl": "https://identitymanagement.phoenix.alza.cz/connect/token",
-            "scopes": {
-              "konzole_access": "Konzole Access",
-              "konzole_access_system": "Konzole Access System",
-              "box2box_connector": "Box2 Box Connector (FIXME: This scope (If you like to use it - I mean restrict the API on its possession by access_token :)) needs to be created and assigned to corresponding clientId in IdentityManagement first :))"
-            }
-          },
           "clientCredentials": {
             "tokenUrl": "https://identitymanagement.phoenix.alza.cz/connect/token",
             "scopes": {
-              "konzole_access": "Konzole Access",
-              "konzole_access_system": "Konzole Access System",
-              "box2box_connector": "Box2 Box Connector (FIXME: This scope (If you like to use it - I mean restrict the API on its possession by access_token :)) needs to be created and assigned to corresponding clientId in IdentityManagement first :))"
+              "konzole_access": "Konzole Access"              
             }
           }
         }
-      },
-      "Bearer": {
-        "type": "http",
-        "description": "Please enter access token directly as an alternative to previous approaches",
-        "scheme": "Bearer",
-        "bearerFormat": "JWT"
       }
     }
   },
