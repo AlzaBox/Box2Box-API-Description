@@ -1240,32 +1240,6 @@
         },
         "additionalProperties": false
       },
-      "GraphQLQuery": {
-        "type": "object",
-        "properties": {
-          "operationName": {
-            "type": "string",
-            "nullable": true
-          },
-          "namedQuery": {
-            "type": "string",
-            "nullable": true
-          },
-          "query": {
-            "type": "string",
-            "nullable": true
-          },
-          "variables": {
-            "nullable": true
-          },
-          "parameters": {
-            "type": "object",
-            "additionalProperties": { },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "LabelResponse": {
         "type": "object",
         "properties": {
