@@ -303,64 +303,6 @@
         ]
       }
     },
-    "/api/graphql": {
-      "post": {
-        "tags": [
-          "GraphQL"
-        ],
-        "summary": " (Auth)",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GraphQLQuery"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GraphQLQuery"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GraphQLQuery"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [ ]
-          },
-          {
-            "Bearer": [ ]
-          }
-        ]
-      }
-    },
-    "/api/metrics": {
-      "get": {
-        "tags": [
-          "Metrics"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/v1/order": {
       "post": {
         "tags": [
