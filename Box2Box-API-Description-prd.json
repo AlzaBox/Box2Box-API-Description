@@ -1545,31 +1545,14 @@
         "type": "oauth2",
         "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\n                        then generated access token gets all scopes the specified client_id is authorized for.\n                        This behavior is by design by Duende.",
         "flows": {
-          "password": {
-            "tokenUrl": "https://identitymanagement.phoenix.alza.cz/connect/token",
-            "scopes": {
-              "konzole_access": "Konzole Access",
-              "konzole_access_system": "Konzole Access System",
-              "box2box_connector": "Box2 Box Connector (FIXME: This scope (If you like to use it - I mean restrict the API on its possession by access_token :)) needs to be created and assigned to corresponding clientId in IdentityManagement first :))"
-            }
-          },
           "clientCredentials": {
             "tokenUrl": "https://identitymanagement.phoenix.alza.cz/connect/token",
             "scopes": {
-              "konzole_access": "Konzole Access",
-              "konzole_access_system": "Konzole Access System",
-              "box2box_connector": "Box2 Box Connector (FIXME: This scope (If you like to use it - I mean restrict the API on its possession by access_token :)) needs to be created and assigned to corresponding clientId in IdentityManagement first :))"
+              "konzole_access": "Konzole Access"
             }
           }
         }
-      },
-      "Bearer": {
-        "type": "http",
-        "description": "Please enter access token directly as an alternative to previous approaches",
-        "scheme": "Bearer",
-        "bearerFormat": "JWT"
-      }
-    }
+      }   
   },
   "tags": [
     {
