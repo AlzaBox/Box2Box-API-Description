@@ -156,10 +156,10 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
@@ -295,10 +295,10 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
@@ -454,10 +454,10 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
@@ -595,10 +595,10 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
@@ -744,10 +744,10 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
@@ -902,10 +902,10 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
           }
         ]
       }
@@ -1060,10 +1060,220 @@
         },
         "security": [
           {
-            "OAuth2": [ ]
+            "OAuth2": []
           },
           {
-            "Bearer": [ ]
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/subpartner/upsert": {
+      "post": {
+        "tags": [
+          "Subpartner"
+        ],
+        "summary": "Creates or updates a sub-partner. (Auth)",
+        "description": "This endpoint uses JSON Merge Patch-like semantics for nullable request fields.\r\nOmitting a field preserves the stored value, sending `null` clears the stored value,\r\nand sending a concrete value updates the stored value.\r\n            \r\nThe tri-state handling is implemented server-side through a custom wrapper,\r\nbut clients send plain JSON scalar values or `null` only. Do not send wrapper objects.\r\n            \r\nSample request:\r\n            \r\n    POST api/v1/subpartner/upsert\r\n    {\r\n        \"subPartnerId\": \"my-shop\",\r\n        \"displayName\": \"My Shop\",\r\n        \"companyName\": \"My Shop s.r.o.\",\r\n        \"url\": \"https://myshop.cz\",\r\n        \"contactPhonePrefix\": \"+420\",\r\n        \"contactPhone\": \"777123456\",\r\n        \"contactEmail\": \"info@myshop.cz\",\r\n        \"city\": \"Prague\",\r\n        \"street\": \"Wenceslas Square\",\r\n        \"houseNumber\": \"1\",\r\n        \"zipCode\": \"11000\",\r\n        \"ic\": \"12345670\",\r\n        \"dic\": \"CZ12345670\",\r\n        \"iban\": \"CZ6508000000192000145399\",\r\n        \"isEnabled\": true\r\n    }\n\nJSON Merge Patch-like semantics apply to nullable request fields: omit a property to preserve the stored value, send null to clear it, or send a concrete value to update it. The server binds these fields through PatchField<T>, but clients must send plain JSON values or null, not wrapper objects.",
+        "requestBody": {
+          "description": "The upsert request body.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubpartnerUpsertRequest"
+              },
+              "example": {
+                "subPartnerId": "my-shop",
+                "displayName": "My Shop",
+                "companyName": "My Shop s.r.o.",
+                "url": "https://myshop.cz",
+                "contactPhonePrefix": "+420",
+                "contactPhone": "777123456",
+                "contactEmail": "info@myshop.cz",
+                "city": "Prague",
+                "street": "Wenceslas Square",
+                "houseNumber": "1",
+                "zipCode": "11000",
+                "ic": "12345670",
+                "dic": "CZ12345670",
+                "iban": "CZ6508000000192000145399",
+                "isEnabled": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubpartnerUpsertRequest"
+              },
+              "example": {
+                "subPartnerId": "my-shop",
+                "displayName": "My Shop",
+                "companyName": "My Shop s.r.o.",
+                "url": "https://myshop.cz",
+                "contactPhonePrefix": "+420",
+                "contactPhone": "777123456",
+                "contactEmail": "info@myshop.cz",
+                "city": "Prague",
+                "street": "Wenceslas Square",
+                "houseNumber": "1",
+                "zipCode": "11000",
+                "ic": "12345670",
+                "dic": "CZ12345670",
+                "iban": "CZ6508000000192000145399",
+                "isEnabled": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubpartnerUpsertRequest"
+              },
+              "example": {
+                "subPartnerId": "my-shop",
+                "displayName": "My Shop",
+                "companyName": "My Shop s.r.o.",
+                "url": "https://myshop.cz",
+                "contactPhonePrefix": "+420",
+                "contactPhone": "777123456",
+                "contactEmail": "info@myshop.cz",
+                "city": "Prague",
+                "street": "Wenceslas Square",
+                "houseNumber": "1",
+                "zipCode": "11000",
+                "ic": "12345670",
+                "dic": "CZ12345670",
+                "iban": "CZ6508000000192000145399",
+                "isEnabled": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubpartnerUpsertResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubpartnerUpsertResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubpartnerUpsertResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          },
+          {
+            "Bearer": []
           }
         ]
       }
@@ -1459,7 +1669,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "RecipientInfo": {
         "required": [
@@ -1526,6 +1736,187 @@
         },
         "additionalProperties": false,
         "description": "Information about sender."
+      },
+      "SubpartnerResponse": {
+        "type": "object",
+        "properties": {
+          "subPartnerId": {
+            "type": "string",
+            "description": "The sub-partner identifier.",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the sub-partner.",
+            "nullable": true
+          },
+          "companyName": {
+            "type": "string",
+            "description": "Legal company name of the sub-partner.",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Public website URL of the sub-partner.",
+            "nullable": true
+          },
+          "contactPhonePrefix": {
+            "type": "string",
+            "description": "International phone prefix.",
+            "nullable": true
+          },
+          "contactPhone": {
+            "type": "string",
+            "description": "Contact phone number.",
+            "nullable": true
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "Contact e-mail address.",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "description": "Street of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "houseNumber": {
+            "type": "string",
+            "description": "House number of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Zip code of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "ic": {
+            "type": "string",
+            "description": "Czech company identification number (IČO).",
+            "nullable": true
+          },
+          "dic": {
+            "type": "string",
+            "description": "Czech VAT identification number (DIČ).",
+            "nullable": true
+          },
+          "iban": {
+            "type": "string",
+            "description": "IBAN bank account number.",
+            "nullable": true
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the sub-partner is enabled.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response payload for a sub-partner."
+      },
+      "SubpartnerUpsertRequest": {
+        "required": [
+          "subPartnerId"
+        ],
+        "type": "object",
+        "properties": {
+          "subPartnerId": {
+            "type": "string",
+            "description": "The sub-partner identifier (unique per partner)."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the sub-partner.",
+            "nullable": true
+          },
+          "companyName": {
+            "type": "string",
+            "description": "Legal company name of the sub-partner.",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Public website URL of the sub-partner.",
+            "nullable": true
+          },
+          "contactPhonePrefix": {
+            "type": "string",
+            "description": "International phone prefix (e.g. +420).",
+            "nullable": true
+          },
+          "contactPhone": {
+            "type": "string",
+            "description": "Contact phone number.",
+            "nullable": true
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "Contact e-mail address.",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "description": "Street of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "houseNumber": {
+            "type": "string",
+            "description": "House number of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Zip code of the sub-partner's registered address.",
+            "nullable": true
+          },
+          "ic": {
+            "type": "string",
+            "description": "Czech company identification number (IČO).",
+            "nullable": true
+          },
+          "dic": {
+            "type": "string",
+            "description": "Czech VAT identification number (DIČ).",
+            "nullable": true
+          },
+          "iban": {
+            "type": "string",
+            "description": "IBAN bank account number.",
+            "nullable": true
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the sub-partner is enabled.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request DTO for upserting a sub-partner."
+      },
+      "SubpartnerUpsertResponse": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "description": "Whether the sub-partner record was `created` or `updated`.",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/SubpartnerResponse"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for a sub-partner upsert operation."
       },
       "TrackingUrlResponse": {
         "type": "object",
