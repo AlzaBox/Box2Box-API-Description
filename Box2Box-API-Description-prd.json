@@ -156,10 +156,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -295,10 +295,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -309,7 +309,7 @@
           "Order"
         ],
         "summary": "Creates a order according to partner's input. (Auth)",
-        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777999888\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        },\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\",\r\n            \"refundBankNumber\": \"123456789/0100\"\r\n        },\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        }\r\n    }",
+        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777999888\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        },\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\",\r\n            \"refundBankNumber\": \"123456789/0100\"\r\n        },\r\n        \"currency\": \"CZK\",\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        }\r\n    }\r\n\r\nThe top-level `currency` field is canonical. The nested `payment.currency`\r\nfield is kept only for backward compatibility and is deprecated. If top-level currency\r\nis omitted, the request resolves to `CZK`.",
         "requestBody": {
           "description": "Partner's input.",
           "content": {
@@ -454,10 +454,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -744,10 +744,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -902,10 +902,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1060,10 +1060,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1270,10 +1270,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1403,6 +1403,12 @@
             "format": "double",
             "example": 500
           },
+          "currency": {
+            "type": "string",
+            "description": "Canonical currency of the order.",
+            "nullable": true,
+            "example": "CZK"
+          },
           "recipient": {
             "$ref": "#/components/schemas/RecipientInfo"
           },
@@ -1513,6 +1519,12 @@
             "description": "Value of the order.",
             "format": "double",
             "example": 500
+          },
+          "currency": {
+            "type": "string",
+            "description": "Canonical currency of the order.",
+            "nullable": true,
+            "example": "CZK"
           },
           "recipient": {
             "$ref": "#/components/schemas/RecipientInfo"
@@ -1630,9 +1642,10 @@
           },
           "currency": {
             "type": "string",
-            "description": "Currency of payment.",
+            "description": "Currency of payment.\r\nUse the top-level Konzole.Box2BoxConnector.ApiModel.Order.OrderBase.Currency field instead.",
             "nullable": true,
-            "example": "CZK"
+            "example": "CZK",
+            "deprecated": true
           },
           "refundBankNumber": {
             "type": "string",
@@ -1669,7 +1682,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": {}
+        "additionalProperties": { }
       },
       "RecipientInfo": {
         "required": [
@@ -1943,6 +1956,12 @@
             }
           }
         }
+      },
+      "Bearer": {
+        "type": "http",
+        "description": "Please enter access token directly as an alternative to previous approaches",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
