@@ -489,8 +489,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
