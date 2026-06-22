@@ -1538,6 +1538,12 @@
           "package": {
             "$ref": "#/components/schemas/PackageInfo"
           },
+          "openerKey": {
+            "type": "string",
+            "description": "Unified Alza-side order identifier (the order's opener key).",
+            "nullable": true,
+            "example": "A123456"
+          },
           "senderPin": {
             "type": "string",
             "description": "Pin for sender to let the package in.",
