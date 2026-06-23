@@ -1542,7 +1542,7 @@
             "type": "string",
             "description": "Unified Alza-side order identifier (the order's opener key).",
             "nullable": true,
-            "example": "A123456"
+            "example": "BXB12345"
           },
           "senderPin": {
             "type": "string",
