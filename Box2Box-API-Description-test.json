@@ -309,7 +309,7 @@
           "Order"
         ],
         "summary": "Creates a order according to partner's input. (Auth)",
-        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777999888\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        },\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\",\r\n            \"refundBankNumber\": \"123456789/0100\"\r\n        },\r\n        \"currency\": \"CZK\",\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        }\r\n    }\r\n\r\nThe top-level `currency` field is canonical. The nested `payment.currency`\r\nfield is kept only for backward compatibility and is deprecated. If top-level currency\r\nis omitted, the request resolves to `CZK`.",
+        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777999888\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        },\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\"\r\n        },\r\n        \"currency\": \"CZK\",\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        }\r\n    }\r\n\r\nThe top-level `currency` field is canonical. The nested `payment.currency`\r\nfield is kept only for backward compatibility and is deprecated. If top-level currency\r\nis omitted, the request resolves to `CZK`.\r\n\r\nThe nested `payment.refundBankNumber` field is likewise deprecated. A refund is paid to the\r\nshop bank account resolved from the partner billing settings, so this value does not affect how a\r\nrefund is handled. Requests that still supply either deprecated nested field receive a\r\n`Deprecation: true` response header.",
         "requestBody": {
           "description": "Partner's input.",
           "content": {
@@ -621,14 +621,14 @@
           }
         ]
       }
-    },   
+    },
     "/api/v1/order/{partnerOrderId}/complete": {
       "post": {
         "tags": [
           "Order"
         ],
         "summary": "Marks a partner order as completed. (Auth)",
-        "description": "Sample request:\r\n\r\n    POST api/v1/order/Order-123/complete\r\n    POST api/v1/order/Order-123/complete?subPartnerId=SubPartner-123",
+        "description": "Sample request:\r\n            \r\n    POST api/v1/order/Order-123/complete\r\n    POST api/v1/order/Order-123/complete?subPartnerId=SubPartner-123",
         "parameters": [
           {
             "name": "partnerOrderId",
@@ -755,10 +755,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1234,7 +1234,7 @@
           "Subpartner"
         ],
         "summary": "Creates or updates a sub-partner. (Auth)",
-        "description": "This endpoint uses JSON Merge Patch-like semantics for nullable request fields.\r\nOmitting a field preserves the stored value, sending `null` clears the stored value,\r\nand sending a concrete value updates the stored value.\r\n            \r\nThe tri-state handling is implemented server-side through a custom wrapper,\r\nbut clients send plain JSON scalar values or `null` only. Do not send wrapper objects.\r\n            \r\nSample request:\r\n            \r\n    POST api/v1/subpartner/upsert\r\n    {\r\n        \"subPartnerId\": \"my-shop\",\r\n        \"displayName\": \"My Shop\",\r\n        \"companyName\": \"My Shop s.r.o.\",\r\n        \"url\": \"https://myshop.cz\",\r\n        \"contactPhonePrefix\": \"+420\",\r\n        \"contactPhone\": \"777123456\",\r\n        \"contactEmail\": \"info@myshop.cz\",\r\n        \"city\": \"Prague\",\r\n        \"street\": \"Wenceslas Square\",\r\n        \"houseNumber\": \"1\",\r\n        \"zipCode\": \"11000\",\r\n        \"ic\": \"12345670\",\r\n        \"dic\": \"CZ12345670\",\r\n        \"iban\": \"CZ6508000000192000145399\",\r\n        \"isEnabled\": true\r\n    }\n\nJSON Merge Patch-like semantics apply to nullable request fields: omit a property to preserve the stored value, send null to clear it, or send a concrete value to update it. The server binds these fields through PatchField<T>, but clients must send plain JSON values or null, not wrapper objects.",
+        "description": "This endpoint uses JSON Merge Patch-like semantics for nullable request fields.\r\nOmitting a field preserves the stored value, sending `null` clears the stored value,\r\nand sending a concrete value updates the stored value.\r\n            \r\nThe tri-state handling is implemented server-side through a custom wrapper,\r\nbut clients send plain JSON scalar values or `null` only. Do not send wrapper objects.\r\n            \r\nThe `subPartnerId` field is optional. Omitting it, or sending a blank value, targets the\r\npartner's `Default` sub-partner; the response always echoes the resolved identifier.\r\nPartners in `Manual` billing mode cannot upsert the `Default` sub-partner and receive\r\n`400 Bad Request`; their billing details are maintained in the partner billing settings.\r\n            \r\nSample request:\r\n            \r\n    POST api/v1/subpartner/upsert\r\n    {\r\n        \"subPartnerId\": \"my-shop\",\r\n        \"displayName\": \"My Shop\",\r\n        \"companyName\": \"My Shop s.r.o.\",\r\n        \"url\": \"https://myshop.cz\",\r\n        \"contactPhonePrefix\": \"+420\",\r\n        \"contactPhone\": \"777123456\",\r\n        \"contactEmail\": \"info@myshop.cz\",\r\n        \"city\": \"Prague\",\r\n        \"street\": \"Wenceslas Square\",\r\n        \"houseNumber\": \"1\",\r\n        \"zipCode\": \"11000\",\r\n        \"ic\": \"12345670\",\r\n        \"dic\": \"CZ12345670\",\r\n        \"iban\": \"CZ6508000000192000145399\",\r\n        \"isEnabled\": true\r\n    }\n\nJSON Merge Patch-like semantics apply to nullable request fields: omit a property to preserve the stored value, send null to clear it, or send a concrete value to update it. The server binds these fields through PatchField<T>, but clients must send plain JSON values or null, not wrapper objects.",
         "requestBody": {
           "description": "The upsert request body.",
           "content": {
@@ -1815,9 +1815,10 @@
           },
           "refundBankNumber": {
             "type": "string",
-            "description": "Bank number of account to refund.",
+            "description": "Bank number of account to refund.\r\nDeprecated: a refund is paid to the shop bank account resolved from the partner billing settings,\r\nso this value does not affect how a refund is handled. It is still stored and returned for backward compatibility.",
             "nullable": true,
-            "example": "123456789/0100"
+            "example": "123456789/0100",
+            "deprecated": true
           }
         },
         "additionalProperties": false,
@@ -1999,14 +2000,13 @@
         "description": "Response payload for a sub-partner."
       },
       "SubpartnerUpsertRequest": {
-        "required": [
-          "subPartnerId"
-        ],
         "type": "object",
         "properties": {
           "subPartnerId": {
             "type": "string",
-            "description": "The sub-partner identifier (unique per partner)."
+            "description": "The sub-partner identifier (unique per partner).\r\nWhen omitted, blank, or whitespace-only, the partner's `Default` sub-partner is targeted.",
+            "nullable": true,
+            "example": "my-shop"
           },
           "displayName": {
             "type": "string",
@@ -2113,7 +2113,7 @@
     "securitySchemes": {
       "OAuth2": {
         "type": "oauth2",
-        "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\n                        then generated access token gets all scopes the specified client_id is authorized for.\n                        This behavior is by design by Duende.",
+        "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\r\n                        then generated access token gets all scopes the specified client_id is authorized for.\r\n                        This behavior is by design by Duende.",
         "flows": {
           "clientCredentials": {
             "tokenUrl": "https://identitymanagement.phx-test.alza.cz/connect/token",
@@ -2139,6 +2139,10 @@
     {
       "name": "Order",
       "description": "Controller for orders management."
+    },
+    {
+      "name": "Subpartner",
+      "description": "Controller for sub-partner management."
     }
   ]
 }
