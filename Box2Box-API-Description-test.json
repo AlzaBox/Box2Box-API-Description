@@ -2131,7 +2131,7 @@
         "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\r\n                        then generated access token gets all scopes the specified client_id is authorized for.\r\n                        This behavior is by design by Duende.",
         "flows": {
           "clientCredentials": {
-            "tokenUrl": "https://identitymanagement.phx-test.alz.lcl/connect/token",
+            "tokenUrl": "https://identitymanagement.phx-test.alza.cz/connect/token",
             "scopes": {
               "konzole_access": "Konzole Access"
             }
