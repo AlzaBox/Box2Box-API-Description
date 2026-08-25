@@ -20,7 +20,7 @@
           "Box"
         ],
         "summary": "Gets a box according to box's id. (Auth)",
-        "description": "Sample request:\r\n\r\n    GET api/v1/box?boxId=1",
+        "description": "Sample request:\r\n\r\n    GET api/v1/box?boxId=1\r\n    \r\nThe `gps.lat` and `gps.lng` fields have latitude and longitude swapped and are\r\ndeprecated. Use `gps.latV2` and `gps.lngV2` instead. Responses carry a\r\n`Deprecation: true` header and a `Link` header pointing to the migration guide.",
         "parameters": [
           {
             "name": "boxId",
@@ -170,7 +170,7 @@
           "Box"
         ],
         "summary": "Get all boxes. (Auth)",
-        "description": "Sample request:\r\n\r\n    GET api/v1/boxes",
+        "description": "Sample request:\r\n\r\n    GET api/v1/boxes\r\n    \r\nThe `gps.lat` and `gps.lng` fields have latitude and longitude swapped and are\r\ndeprecated. Use `gps.latV2` and `gps.lngV2` instead. Responses carry a\r\n`Deprecation: true` header and a `Link` header pointing to the migration guide.",
         "responses": {
           "200": {
             "description": "Success",
@@ -628,7 +628,7 @@
           "Order"
         ],
         "summary": "Marks a partner order as completed. (Auth)",
-        "description": "Sample request:\r\n\r\n    POST api/v1/order/Order-123/complete\r\n    POST api/v1/order/Order-123/complete?subPartnerId=SubPartner-123",
+        "description": "Sample request:\r\n            \r\n    POST api/v1/order/Order-123/complete\r\n    POST api/v1/order/Order-123/complete?subPartnerId=SubPartner-123",
         "parameters": [
           {
             "name": "partnerOrderId",
@@ -755,10 +755,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1603,18 +1603,33 @@
         "properties": {
           "lat": {
             "type": "number",
-            "description": "Geo location where box is placed.",
+            "description": "Latitude and longitude are swapped in this field.\r\nUse LatV2 instead for the correct latitude.",
             "format": "double",
-            "nullable": true
+            "nullable": true,
+            "deprecated": true
           },
           "lng": {
             "type": "number",
-            "description": "Geo location where box is placed.",
+            "description": "Latitude and longitude are swapped in this field.\r\nUse LngV2 instead for the correct longitude.",
+            "format": "double",
+            "nullable": true,
+            "deprecated": true
+          },
+          "latV2": {
+            "type": "number",
+            "description": "Geographic latitude of the box (north-south).",
+            "format": "double",
+            "nullable": true
+          },
+          "lngV2": {
+            "type": "number",
+            "description": "Geographic longitude of the box (east-west).",
             "format": "double",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Geographic position of a box. The legacy Konzole.Box2BoxConnector.ApiModel.Box.Gps.Lat and Konzole.Box2BoxConnector.ApiModel.Box.Gps.Lng values are\r\nswapped and retained only for backward compatibility; use Konzole.Box2BoxConnector.ApiModel.Box.Gps.LatV2 and\r\nKonzole.Box2BoxConnector.ApiModel.Box.Gps.LngV2 for correct coordinates."
       },
       "LabelResponse": {
         "type": "object",
@@ -2113,7 +2128,7 @@
     "securitySchemes": {
       "OAuth2": {
         "type": "oauth2",
-        "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\n                        then generated access token gets all scopes the specified client_id is authorized for.\n                        This behavior is by design by Duende.",
+        "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\r\n                        then generated access token gets all scopes the specified client_id is authorized for.\r\n                        This behavior is by design by Duende.",
         "flows": {
           "clientCredentials": {
             "tokenUrl": "https://identitymanagement.phoenix.alza.cz/connect/token",
@@ -2139,6 +2154,10 @@
     {
       "name": "Order",
       "description": "Controller for orders management."
+    },
+    {
+      "name": "Subpartner",
+      "description": "Controller for sub-partner management."
     }
   ]
 }
