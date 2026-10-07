@@ -303,6 +303,390 @@
         ]
       }
     },
+    "/api/v1/catalogue/catalogue-items": {
+      "get": {
+        "tags": [
+          "Catalogue"
+        ],
+        "summary": "Gets catalogue items for a country. (Auth)",
+        "description": "Sample request:\r\n            \r\n    GET api/v1/catalogue/catalogue-items?countryCode=CZ&lang=cs\r\n            \r\nThe response uses the same dictionary shape as the Box2Box catalogue\r\nendpoint. `Values.MaxCoverageValue` is the maximum insured value and\r\n`Values.InsuranceChargeThreshold` is the separate insurance threshold.",
+        "parameters": [
+          {
+            "name": "CountryCode",
+            "in": "query",
+            "description": "Country code used to select catalogue items.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Lang",
+            "in": "query",
+            "description": "Optional language code used for localization.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/CatalogueItemResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/CatalogueItemResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/CatalogueItemResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [ ]
+          },
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/graphql": {
+      "post": {
+        "tags": [
+          "GraphQL"
+        ],
+        "summary": " (Auth)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphQLQuery"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphQLQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphQLQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [ ]
+          },
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/metrics": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/order/buylink": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Creates a dedicated Buylink customer order. (Auth)",
+        "description": "Sample request:\r\n            \r\n    POST api/v1/order/buylink\r\n    {\r\n        \"catalogueItemOpenerKey\": \"BXBCI1\",\r\n        \"senderName\": \"Jan Odesilatel\",\r\n        \"senderEmail\": \"jan.odesilatel@example.cz\",\r\n        \"senderPhone\": \"777666444\",\r\n        \"senderPhonePrefix\": \"+420\",\r\n        \"senderStreet\": \"Jankovcova 1\",\r\n        \"senderCity\": \"Praha\",\r\n        \"senderZipCode\": \"17000\",\r\n        \"senderCountryCode\": \"CZ\",\r\n        \"recipientAlzaBoxId\": 123,\r\n        \"recipientName\": \"Jan Novak\",\r\n        \"recipientPhone\": \"777666555\",\r\n        \"recipientPhonePrefix\": \"+420\",\r\n        \"orderValue\": 500.00,\r\n        \"correlationId\": \"buylink-order-123\",\r\n        \"isPaid\": true,\r\n        \"customerCode\": \"SE0000000\"\r\n    }",
+        "requestBody": {
+          "description": "Dedicated Buylink order input.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuylinkOrderBodyInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuylinkOrderBodyInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuylinkOrderBodyInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuylinkOrderResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuylinkOrderResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuylinkOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [ ]
+          },
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
     "/api/v1/order": {
       "post": {
         "tags": [
@@ -627,8 +1011,8 @@
         "tags": [
           "Order"
         ],
-        "summary": "Creates a BranchToAb (warehouse-to-box) order with a dummy implementation. (Auth)",
-        "description": "Sample request:\r\n            \r\n    POST api/v1/order/warehouse-to-box\r\n    {\r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"currency\": \"CZK\",\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777123456\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        }\r\n    }\r\n            \r\nThis is a dummy implementation. The endpoint validates the request and returns\r\nhardcoded response values (`openerKey`, `state`) without creating a real order.",
+        "summary": "Creates a BranchToAb (warehouse-to-box) order. (Auth)",
+        "description": "Sample request:\r\n            \r\n    POST api/v1/order/warehouse-to-box\r\n    {\r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"currency\": \"CZK\",\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777123456\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        }\r\n    }",
         "requestBody": {
           "description": "BranchToAb order input.",
           "content": {
@@ -1062,7 +1446,7 @@
           }
         ]
       }
-    },    
+    },
     "/api/v1/order/list": {
       "get": {
         "tags": [
@@ -1117,6 +1501,150 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/OrderResponsePaginatedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [ ]
+          },
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v1/order/price-details": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Gets calculated price details for an order. (Auth)",
+        "description": "Sample request:\r\n            \r\n    GET api/v1/order/price-details?catalogueItemOpener=CAT-123&orderValue=500\r\n            \r\nSample response:\r\n            \r\n    {\r\n        \"catalogueItemOpener\": \"BXBCI123\",\r\n        \"currencyCode\": \"CZK\",\r\n        \"orderValue\": 500,\r\n        \"coveragePriceExclVat\": 10,\r\n        \"coveragePriceInclVat\": 12.1,\r\n        \"coverageVatRate\": 21,\r\n        \"priceExclVat\": 100,\r\n        \"priceInclVat\": 121,\r\n        \"priceVatRate\": 21,\r\n        \"totalPriceExclVat\": 110,\r\n        \"totalPriceInclVat\": 133.1\r\n    }",
+        "parameters": [
+          {
+            "name": "orderValue",
+            "in": "query",
+            "description": "Value of the order to price.",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "example": 500
+            },
+            "example": 500
+          },
+          {
+            "name": "catalogueItemOpener",
+            "in": "query",
+            "description": "Catalogue item opener used to resolve the price.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "CAT-123"
+            },
+            "example": "CAT-123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderPriceDetailsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderPriceDetailsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderPriceDetailsResponse"
                 }
               }
             }
@@ -1528,6 +2056,84 @@
         ]
       }
     },
+    "/api/serviceinfo/about": {
+      "get": {
+        "tags": [
+          "ServiceInfo"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/serviceinfo/versions": {
+      "get": {
+        "tags": [
+          "ServiceInfo"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/serviceinfo/headers": {
+      "get": {
+        "tags": [
+          "ServiceInfo"
+        ],
+        "summary": " (Auth policies: role::Developer,DevOps)",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [ ]
+          },
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/serviceinfo/userinfo": {
+      "get": {
+        "tags": [
+          "ServiceInfo"
+        ],
+        "summary": " (Auth policies: role::Developer,DevOps)",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [ ]
+          },
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
     "/api/v1/subpartner/upsert": {
       "post": {
         "tags": [
@@ -1865,7 +2471,7 @@
           },
           "currency": {
             "type": "string",
-            "description": "Canonical currency of the order. Defaults to CZK when omitted.",
+            "description": "Requested currency of the order. When omitted, the backend resolves the canonical currency.",
             "nullable": true,
             "example": "CZK"
           },
@@ -1935,16 +2541,265 @@
           "openerKey": {
             "type": "string",
             "description": "Unified Alza-side order identifier (the order's opener key).",
-            "example": "BXB000000"
+            "example": "BXB1234"
           },
           "state": {
             "type": "string",
             "description": "State of the order.",
-            "example": "New"
+            "example": "NEW"
           }
         },
         "additionalProperties": false,
-        "description": "Response for a BranchToAb (warehouse-to-box) order creation."
+        "description": "Response for a BranchToAb (warehouse-to-box) order creation.\r\nFields the endpoint always returns are required non-nullable;\r\nBackend-returned optional fields (Konzole.Box2BoxConnector.ApiModel.Order.BranchToAbOrderResponse.SubPartnerId, Konzole.Box2BoxConnector.ApiModel.Order.BranchToAbOrderResponse.Sender) stay nullable.\r\nAlways-present fields carry both the `required` keyword (compile-time and deserialization enforcement)\r\nand the `[Required]` attribute, because Swashbuckle ignores the C# keyword when generating the OpenAPI schema."
+      },
+      "BuylinkOrderResponse": {
+        "type": "object",
+        "properties": {
+          "opener": {
+            "type": "string",
+            "description": "Unified order identifier, e.g. BXB12345",
+            "nullable": true
+          },
+          "senderPin": {
+            "type": "string",
+            "description": "Sender PIN for the order, e.g. 1234",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for the dedicated Buylink order creation endpoint."
+      },
+      "CatalogueItemDimensionsResponse": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "string",
+            "description": "Maximum width in centimetres.",
+            "nullable": true
+          },
+          "height": {
+            "type": "string",
+            "description": "Maximum height in centimetres.",
+            "nullable": true
+          },
+          "length": {
+            "type": "string",
+            "description": "Maximum length in centimetres.",
+            "nullable": true
+          },
+          "weight": {
+            "type": "string",
+            "description": "Maximum weight in kilograms.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Dimensions of a catalogue item."
+      },
+      "CatalogueItemResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Localized item title.",
+            "nullable": true
+          },
+          "subtitle": {
+            "type": "string",
+            "description": "Localized item subtitle.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Localized item description.",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Indicates whether the item is active."
+          },
+          "values": {
+            "$ref": "#/components/schemas/CatalogueItemValuesResponse"
+          },
+          "dimensions": {
+            "$ref": "#/components/schemas/CatalogueItemDimensionsResponse"
+          }
+        },
+        "additionalProperties": false,
+        "description": "REST response object for a catalogue item."
+      },
+      "CatalogueItemValuesResponse": {
+        "type": "object",
+        "properties": {
+          "openerKey": {
+            "type": "string",
+            "description": "Opener key.",
+            "nullable": true
+          },
+          "productCode": {
+            "type": "string",
+            "description": "Product code.",
+            "nullable": true
+          },
+          "priceExclVat": {
+            "type": "number",
+            "description": "Product price without VAT.",
+            "format": "double"
+          },
+          "priceInclVat": {
+            "type": "number",
+            "description": "Product price with VAT.",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency of the product price.",
+            "nullable": true
+          },
+          "maxCoverageValue": {
+            "type": "number",
+            "description": "Maximum insured value.",
+            "format": "double"
+          },
+          "insuranceChargeThreshold": {
+            "type": "number",
+            "description": "Insurance charge threshold.",
+            "format": "double"
+          },
+          "minOrderValue": {
+            "type": "number",
+            "description": "Minimum order value.",
+            "format": "double"
+          },
+          "maxOrderValue": {
+            "type": "number",
+            "description": "Maximum order value.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Values of a catalogue item."
+      },
+      "CreateBuylinkOrderBodyInput": {
+        "required": [
+          "catalogueItemOpenerKey",
+          "customerCode",
+          "orderValue",
+          "recipientAlzaBoxId",
+          "recipientName",
+          "recipientPhone",
+          "recipientPhonePrefix",
+          "senderCity",
+          "senderCountryCode",
+          "senderEmail",
+          "senderName",
+          "senderPhone",
+          "senderPhonePrefix",
+          "senderStreet",
+          "senderZipCode"
+        ],
+        "type": "object",
+        "properties": {
+          "catalogueItemOpenerKey": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Catalogue item opener key.",
+            "example": "BXBCI1"
+          },
+          "senderName": {
+            "type": "string",
+            "description": "Sender name.",
+            "example": "Jan Odesilatel"
+          },
+          "senderEmail": {
+            "type": "string",
+            "description": "Sender email.",
+            "format": "email",
+            "example": "jan.odesilatel@example.cz"
+          },
+          "senderPhone": {
+            "type": "string",
+            "description": "Sender phone.",
+            "example": "777666444"
+          },
+          "senderPhonePrefix": {
+            "type": "string",
+            "description": "Sender phone prefix.",
+            "example": "+420"
+          },
+          "senderStreet": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "Sender street.",
+            "example": "Jankovcova 1"
+          },
+          "senderCity": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "Sender city.",
+            "example": "Praha"
+          },
+          "senderZipCode": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "Sender ZIP code.",
+            "example": "17000"
+          },
+          "senderCountryCode": {
+            "maxLength": 5,
+            "type": "string",
+            "description": "Sender country code.",
+            "example": "CZ"
+          },
+          "recipientAlzaBoxId": {
+            "type": "integer",
+            "description": "Identification of AlzaBox partner wants to send the package to.",
+            "format": "int32",
+            "example": 123
+          },
+          "recipientName": {
+            "type": "string",
+            "description": "Recipient name.",
+            "example": "Jan Novak"
+          },
+          "recipientPhone": {
+            "type": "string",
+            "description": "Recipient phone.",
+            "example": "777666555"
+          },
+          "recipientPhonePrefix": {
+            "type": "string",
+            "description": "Recipient phone prefix.",
+            "example": "+420"
+          },
+          "orderValue": {
+            "type": "number",
+            "description": "Value of the order.",
+            "format": "double",
+            "example": 500
+          },
+          "correlationId": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Correlation identifier used for idempotent retries.",
+            "nullable": true,
+            "example": "buylink-order-123"
+          },
+          "isPaid": {
+            "type": "boolean",
+            "description": "Indicates whether the order is paid or not.",
+            "nullable": true,
+            "example": true
+          },
+          "customerCode": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "Customer code.",
+            "example": "SE0000000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Input for creating a dedicated Buylink customer order."
       },
       "CreateOrderBodyInput": {
         "required": [
@@ -2047,6 +2902,32 @@
         "additionalProperties": false,
         "description": "Geographic position of a box. The legacy Konzole.Box2BoxConnector.ApiModel.Box.Gps.Lat and Konzole.Box2BoxConnector.ApiModel.Box.Gps.Lng values are\r\nswapped and retained only for backward compatibility; use Konzole.Box2BoxConnector.ApiModel.Box.Gps.LatV2 and\r\nKonzole.Box2BoxConnector.ApiModel.Box.Gps.LngV2 for correct coordinates."
       },
+      "GraphQLQuery": {
+        "type": "object",
+        "properties": {
+          "operationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "namedQuery": {
+            "type": "string",
+            "nullable": true
+          },
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "variables": {
+            "nullable": true
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LabelResponse": {
         "type": "object",
         "properties": {
@@ -2077,6 +2958,79 @@
           }
         },
         "additionalProperties": false
+      },
+      "OrderPriceDetailsResponse": {
+        "required": [
+          "catalogueItemOpener",
+          "coveragePriceExclVat",
+          "coveragePriceInclVat",
+          "coverageVatRate",
+          "orderValue",
+          "priceExclVat",
+          "priceInclVat",
+          "priceVatRate",
+          "totalPriceExclVat",
+          "totalPriceInclVat"
+        ],
+        "type": "object",
+        "properties": {
+          "catalogueItemOpener": {
+            "type": "string",
+            "description": "Catalogue item unique identifier."
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency code for the calculated prices.",
+            "nullable": true
+          },
+          "orderValue": {
+            "type": "number",
+            "description": "Value of the order.",
+            "format": "double"
+          },
+          "coveragePriceExclVat": {
+            "type": "number",
+            "description": "Coverage price excluding VAT.",
+            "format": "double"
+          },
+          "coveragePriceInclVat": {
+            "type": "number",
+            "description": "Coverage price including VAT.",
+            "format": "double"
+          },
+          "coverageVatRate": {
+            "type": "number",
+            "description": "VAT rate applied to the coverage price.",
+            "format": "double"
+          },
+          "priceExclVat": {
+            "type": "number",
+            "description": "Price excluding VAT.",
+            "format": "double"
+          },
+          "priceInclVat": {
+            "type": "number",
+            "description": "Price including VAT.",
+            "format": "double"
+          },
+          "priceVatRate": {
+            "type": "number",
+            "description": "VAT rate applied to the price.",
+            "format": "double"
+          },
+          "totalPriceExclVat": {
+            "type": "number",
+            "description": "Total price excluding VAT.",
+            "format": "double"
+          },
+          "totalPriceInclVat": {
+            "type": "number",
+            "description": "Total price including VAT.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Price details for an order."
       },
       "OrderResponse": {
         "required": [
@@ -2544,12 +3498,22 @@
     "securitySchemes": {
       "OAuth2": {
         "type": "oauth2",
-        "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\r\n                        then generated access token gets all scopes the specified client_id is authorized for.\r\n                        This behavior is by design by Duende.",
+        "description": "IMPORTANT NOTE: If you do not specify any scope in the authentication request\n                        then generated access token gets all scopes the specified client_id is authorized for.\n                        This behavior is by design by Duende.",
         "flows": {
+          "password": {
+            "tokenUrl": "https://identitymanagement.phx-test.alza.cz/connect/token",
+            "scopes": {
+              "konzole_access": "Konzole Access",
+              "konzole_access_system": "Konzole Access System",
+              "box2box_connector": "Box2 Box Connector (FIXME: This scope (If you like to use it - I mean restrict the API on its possession by access_token :)) needs to be created and assigned to corresponding clientId in IdentityManagement first :))"
+            }
+          },
           "clientCredentials": {
             "tokenUrl": "https://identitymanagement.phx-test.alza.cz/connect/token",
             "scopes": {
-              "konzole_access": "Konzole Access"
+              "konzole_access": "Konzole Access",
+              "konzole_access_system": "Konzole Access System",
+              "box2box_connector": "Box2 Box Connector (FIXME: This scope (If you like to use it - I mean restrict the API on its possession by access_token :)) needs to be created and assigned to corresponding clientId in IdentityManagement first :))"
             }
           }
         }
@@ -2566,6 +3530,10 @@
     {
       "name": "Box",
       "description": "Controller for boxes management."
+    },
+    {
+      "name": "Catalogue",
+      "description": "Controller for the BuyLink product catalogue."
     },
     {
       "name": "Order",
