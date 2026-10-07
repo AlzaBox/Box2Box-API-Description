@@ -156,10 +156,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -295,10 +295,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -454,10 +454,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       },
@@ -614,10 +614,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -753,10 +753,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -894,10 +894,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1055,14 +1055,14 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
-    },
+    },    
     "/api/v1/order/list": {
       "get": {
         "tags": [
@@ -1204,10 +1204,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1362,10 +1362,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1520,10 +1520,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -1730,10 +1730,10 @@
         },
         "security": [
           {
-            "OAuth2": []
+            "OAuth2": [ ]
           },
           {
-            "Bearer": []
+            "Bearer": [ ]
           }
         ]
       }
@@ -2280,7 +2280,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": {}
+        "additionalProperties": { }
       },
       "RecipientInfo": {
         "required": [
