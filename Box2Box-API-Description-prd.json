@@ -627,8 +627,8 @@
         "tags": [
           "Order"
         ],
-        "summary": "Creates a BranchToAb (warehouse-to-box) order with a dummy implementation. (Auth)",
-        "description": "Sample request:\r\n            \r\n    POST api/v1/order/warehouse-to-box\r\n    {\r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"currency\": \"CZK\",\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777123456\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        }\r\n    }\r\n            \r\nThis is a dummy implementation. The endpoint validates the request and returns\r\nhardcoded response values (`openerKey`, `state`) without creating a real order.",
+        "summary": "Creates a BranchToAb (warehouse-to-box) order. (Auth)",
+        "description": "Sample request:\r\n            \r\n    POST api/v1/order/warehouse-to-box\r\n    {\r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"currency\": \"CZK\",\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777123456\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        }\r\n    }",
         "requestBody": {
           "description": "BranchToAb order input.",
           "content": {
@@ -1865,7 +1865,7 @@
           },
           "currency": {
             "type": "string",
-            "description": "Canonical currency of the order. Defaults to CZK when omitted.",
+            "description": "Requested currency of the order. When omitted, the backend resolves the canonical currency.",
             "nullable": true,
             "example": "CZK"
           },
@@ -1935,16 +1935,16 @@
           "openerKey": {
             "type": "string",
             "description": "Unified Alza-side order identifier (the order's opener key).",
-            "example": "BXB000000"
+            "example": "BXB1234"
           },
           "state": {
             "type": "string",
             "description": "State of the order.",
-            "example": "New"
+            "example": "NEW"
           }
         },
         "additionalProperties": false,
-        "description": "Response for a BranchToAb (warehouse-to-box) order creation."
+        "description": "Response for a BranchToAb (warehouse-to-box) order creation.\r\nFields the endpoint always returns are required non-nullable;\r\nBackend-returned optional fields (Konzole.Box2BoxConnector.ApiModel.Order.BranchToAbOrderResponse.SubPartnerId, Konzole.Box2BoxConnector.ApiModel.Order.BranchToAbOrderResponse.Sender) stay nullable.\r\nAlways-present fields carry both the `required` keyword (compile-time and deserialization enforcement)\r\nand the `[Required]` attribute, because Swashbuckle ignores the C# keyword when generating the OpenAPI schema."
       },
       "CreateOrderBodyInput": {
         "required": [
