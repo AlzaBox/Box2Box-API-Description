@@ -1944,7 +1944,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Response for a BranchToAb (warehouse-to-box) order creation.\r\nFields the endpoint always returns are required non-nullable;\r\nBackend-returned optional fields (Konzole.Box2BoxConnector.ApiModel.Order.BranchToAbOrderResponse.SubPartnerId, Konzole.Box2BoxConnector.ApiModel.Order.BranchToAbOrderResponse.Sender) stay nullable.\r\nAlways-present fields carry both the `required` keyword (compile-time and deserialization enforcement)\r\nand the `[Required]` attribute, because Swashbuckle ignores the C# keyword when generating the OpenAPI schema."
+        "description": "Response for a BranchToAb (warehouse-to-box) order creation."
       },
       "CreateOrderBodyInput": {
         "required": [
