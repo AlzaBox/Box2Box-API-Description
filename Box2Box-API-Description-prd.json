@@ -309,7 +309,7 @@
           "Order"
         ],
         "summary": "Creates a order according to partner's input. (Auth)",
-        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777999888\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        },\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\"\r\n        },\r\n        \"currency\": \"CZK\",\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        }\r\n    }\r\n\r\nThe top-level `currency` field is canonical. The nested `payment.currency`\r\nfield is kept only for backward compatibility and is deprecated. If top-level currency\r\nis omitted, the request resolves to `CZK`.\r\n\r\nThe nested `payment.refundBankNumber` field is likewise deprecated. A refund is paid to the\r\nshop bank account resolved from the partner billing settings, so this value does not affect how a\r\nrefund is handled. Requests that still supply either deprecated nested field receive a\r\n`Deprecation: true` response header.",
+        "description": "Sample request:\r\n\r\n    POST api/v1/order\r\n    {    \r\n        \"partnerOrderId\": \"Order-123\",\r\n        \"subPartnerId\": \"SubPartner-123\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"recipient\": {\r\n            \"fullName\": \"Jan Příjemce\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777888999\",\r\n            \"email\": \"jan.prijemce@example.cz\"\r\n        },\r\n        \"sender\": {\r\n            \"fullName\": \"Jan Odesílatel\",\r\n            \"phoneNumberPrefix\": \"+420\",\r\n            \"phoneNumber\": \"777999888\",\r\n            \"email\": \"jan.odesilatel@example.cz\"\r\n        },\r\n        \"payment\": {\r\n            \"price\": 99,\r\n            \"variableSymbol\": \"123\",\r\n            \"currency\": \"CZK\"\r\n        },\r\n        \"currency\": \"CZK\",\r\n        \"package\": {\r\n            \"dimensions\": {\r\n                \"depth\": 15.6,\r\n                \"height\": 12.3,\r\n                \"width\": 7.8\r\n            },\r\n            \"weight\": 2.5\r\n        },\r\n        \"senderReservation\": {\r\n            \"boxId\": 456\r\n        }\r\n    }\r\n\r\nSender reservation is requested by supplying only `senderReservation.boxId`.\r\nThe server determines the interval; `from` and `to` are response-only fields.\r\nWhen no sender box is supplied, the response keeps the existing shape. When requested, the response\r\nincludes a `senderReservation` with the status returned by the reservation provider (for example, `CREATED` or\r\n`FAILED`). A reservation failure does not undo the created order and still returns HTTP 200. If `senderReservation.boxId` is <= 0, the request returns HTTP 400. If the sender box does not exist, the request returns HTTP 404 and no order is created.\r\n            \r\nSample request with a sender reservation:\r\n            \r\n    {\r\n        \"partnerOrderId\": \"Order-124\",\r\n        \"recipientBoxId\": 123,\r\n        \"orderValue\": 500,\r\n        \"senderReservation\": {\r\n            \"boxId\": 456\r\n        },\r\n        \"recipient\": { \"fullName\": \"Jan Novak\", \"phoneNumberPrefix\": \"+420\", \"phoneNumber\": \"777888999\" },\r\n        \"package\": { \"dimensions\": { \"depth\": 15, \"height\": 12, \"width\": 8 }, \"weight\": 2.5 }\r\n    }\r\n            \r\nSample reservation response when created:\r\n            \r\n    { \"senderReservation\": { \"status\": \"CREATED\", \"from\": \"2026-10-11T08:00:00Z\", \"to\": \"2026-10-12T08:00:00Z\", \"boxId\": 456 } }\r\n            \r\nSample reservation response when failed:\r\n            \r\n    { \"senderReservation\": { \"status\": \"FAILED\", \"boxId\": 456 } }\r\n            \r\n`FAILED` means that the sender reservation could not be created.\r\nThe order itself is still created successfully.\r\nAvailable box and interval values are preserved for either outcome; unavailable values are omitted.\r\n            \r\nThe top-level `currency` field is canonical. The nested `payment.currency`\r\nfield is kept only for backward compatibility and is deprecated. If top-level currency\r\nis omitted, the request resolves to `CZK`.\r\n\r\nThe nested `payment.refundBankNumber` field is likewise deprecated. A refund is paid to the\r\nshop bank account resolved from the partner billing settings, so this value does not affect how a\r\nrefund is handled. Requests that still supply either deprecated nested field receive a\r\n`Deprecation: true` response header.",
         "requestBody": {
           "description": "Partner's input.",
           "content": {
@@ -336,17 +336,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderResponse"
+                  "$ref": "#/components/schemas/CreateOrderResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderResponse"
+                  "$ref": "#/components/schemas/CreateOrderResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderResponse"
+                  "$ref": "#/components/schemas/CreateOrderResponse"
                 }
               }
             }
@@ -1996,10 +1996,142 @@
           },
           "package": {
             "$ref": "#/components/schemas/PackageInfo"
+          },
+          "senderReservation": {
+            "$ref": "#/components/schemas/ReservationInput"
           }
         },
         "additionalProperties": false,
         "description": "Input for creating order."
+      },
+      "CreateOrderResponse": {
+        "required": [
+          "orderValue",
+          "package",
+          "partnerOrderId",
+          "recipient",
+          "recipientBoxId"
+        ],
+        "type": "object",
+        "properties": {
+          "partnerOrderId": {
+            "type": "string",
+            "description": "Partner identification of the order.",
+            "example": "Order-123"
+          },
+          "subPartnerId": {
+            "type": "string",
+            "description": "Identification of subpartner.",
+            "nullable": true,
+            "example": "SubPartner-123"
+          },
+          "recipientBoxId": {
+            "type": "integer",
+            "description": "Identification of AlzaBox partner wants to send the package to.",
+            "format": "int32",
+            "example": 123
+          },
+          "orderValue": {
+            "type": "number",
+            "description": "Value of the order.",
+            "format": "double",
+            "example": 500
+          },
+          "currency": {
+            "type": "string",
+            "description": "Canonical currency of the order.",
+            "nullable": true,
+            "example": "CZK"
+          },
+          "recipient": {
+            "$ref": "#/components/schemas/RecipientInfo"
+          },
+          "payment": {
+            "$ref": "#/components/schemas/PaymentInfo"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/SenderInfo"
+          },
+          "package": {
+            "$ref": "#/components/schemas/PackageInfo"
+          },
+          "openerKey": {
+            "type": "string",
+            "description": "Unified Alza-side order identifier (the order's opener key).",
+            "nullable": true,
+            "example": "BXB12345"
+          },
+          "senderPin": {
+            "type": "string",
+            "description": "Pin for sender to let the package in.",
+            "nullable": true,
+            "example": "A123456"
+          },
+          "state": {
+            "type": "string",
+            "description": "State of the order.",
+            "nullable": true,
+            "example": "New"
+          },
+          "senderReservation": {
+            "$ref": "#/components/schemas/ReservationResponse"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for a created order, including an optional sender reservation outcome."
+      },
+      "ReservationInput": {
+        "required": [
+          "boxId"
+        ],
+        "type": "object",
+        "properties": {
+          "boxId": {
+            "type": "integer",
+            "description": "Identification of the AlzaBox. Required for every reservation request and must be greater than 0; values <= 0 return HTTP 400. An unknown box returns HTTP 404 and no order is created.",
+            "format": "int32",
+            "minimum": 1,
+            "example": 123
+          }
+        },
+        "additionalProperties": false,
+        "description": "Optional box reservation request."
+      },
+      "ReservationResponse": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "CREATED",
+              "FAILED"
+            ],
+            "type": "string",
+            "description": "Reservation outcome status returned by the reservation provider. Allowed values are `CREATED` and `FAILED`."
+          },
+          "from": {
+            "type": "string",
+            "description": "Actual reservation interval start, including its offset, returned by the reservation provider, if available.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "to": {
+            "type": "string",
+            "description": "Actual reservation interval end, including its offset, returned by the reservation provider, if available.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "boxId": {
+            "type": "integer",
+            "description": "Box of the reservation attempt. For a failed reservation this may be the requested box.",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Reservation outcome included in the create-order response when available."
       },
       "DayOfWeek": {
         "enum": [
