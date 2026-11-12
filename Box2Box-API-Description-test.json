@@ -2104,22 +2104,18 @@
         "type": "object",
         "properties": {
           "status": {
-            "enum": [
-              "CREATED",
-              "FAILED"
-            ],
             "type": "string",
-            "description": "Reservation outcome status returned by the reservation provider. Allowed values are `CREATED` and `FAILED`."
+            "description": "Reservation outcome status: CREATED or FAILED."
           },
           "from": {
             "type": "string",
-            "description": "Actual reservation interval start, including its offset, returned by the reservation provider, if available.",
+            "description": "Reservation interval start in UTC, if available.",
             "format": "date-time",
             "nullable": true
           },
           "to": {
             "type": "string",
-            "description": "Actual reservation interval end, including its offset, returned by the reservation provider, if available.",
+            "description": "Reservation interval end in UTC, if available.",
             "format": "date-time",
             "nullable": true
           },
